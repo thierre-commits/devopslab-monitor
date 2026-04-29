@@ -190,6 +190,14 @@ DATABASE_URL=postgresql://postgres:123456@postgres:5432/devopslab
 
 ---
 
+## 🌐 Deploy
+
+API pública:
+
+https://devopslab-monitor-api.onrender.com
+
+---
+
 ## 👨‍💻 Autor
 
 Thierre Mota de Almeida
