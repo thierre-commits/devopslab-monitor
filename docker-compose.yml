@@ -1,1 +1,27 @@
- 
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: devopslab-postgres
+    environment:
+      POSTGRES_DB: devopslab
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: devopslab-backend
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:123456@postgres:5432/devopslab
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
