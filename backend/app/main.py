@@ -17,6 +17,14 @@ app = FastAPI(
 
 start_scheduler()
 
+@app.get("/")
+def root():
+    return {
+        "message": "DevOpsLab Monitor API",
+        "docs": "/docs",
+        "health": "/health"
+    }
+
 app.add_middleware(RequestLoggerMiddleware)
 
 app.include_router(health_router)
