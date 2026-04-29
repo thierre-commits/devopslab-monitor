@@ -1,1 +1,35 @@
- 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Virtual env
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+logs/
+
+# Node (frontend futuro)
+node_modules/
+.next/
+dist/
+build/
+
+# Docker
+.docker/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
