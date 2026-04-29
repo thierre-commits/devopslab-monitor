@@ -1,144 +1,195 @@
 # DevOpsLab Monitor
 
-Projeto prático de estudo focado em fundamentos de DevOps Júnior.
+Projeto prático focado em fundamentos de DevOps Júnior.
 
-A aplicação consiste em uma API de monitoramento básico de serviços, com banco PostgreSQL, Docker, Docker Compose, logs, healthcheck, migrations e pipeline CI.
+Uma API de monitoramento de serviços com execução automática de checks, persistência em banco de dados e ambiente containerizado.
 
-## Objetivo
+---
 
-Este projeto foi criado para praticar conhecimentos técnicos comuns em vagas de DevOps Júnior:
+## 🚀 Objetivo
 
-- Git
-- Docker
-- Docker Compose
-- CI/CD
-- PostgreSQL
-- API REST
-- Variáveis de ambiente
-- Logs
-- Healthcheck
-- Migrations
-- Documentação técnica
+Simular um ambiente real de monitoramento para praticar:
 
-## Stack
+* Git
+* Docker e Docker Compose
+* CI/CD
+* PostgreSQL
+* APIs REST
+* Variáveis de ambiente
+* Logs
+* Healthcheck
+* Migrations (Alembic)
+* Jobs automáticos (scheduler)
 
-- Backend: FastAPI
-- Banco de dados: PostgreSQL
-- ORM: SQLAlchemy
-- Migrations: Alembic
-- Testes: Pytest
-- Containerização: Docker
-- Orquestração local: Docker Compose
-- CI: GitHub Actions
+---
 
-## Arquitetura
+## 🧱 Stack
 
-```txt
+* FastAPI
+* PostgreSQL
+* SQLAlchemy
+* Alembic
+* Pytest
+* Docker
+* GitHub Actions
+
+---
+
+## 🧠 Arquitetura
+
+```
 Cliente
   ↓
 FastAPI Backend
   ↓
-PostgreSQL# DevOpsLab Monitor
+PostgreSQL
+```
 
-Projeto prático de estudo focado em fundamentos de DevOps Júnior.
+### Ambiente Docker
 
-A aplicação consiste em uma API de monitoramento básico de serviços, com banco PostgreSQL, Docker, Docker Compose, logs, healthcheck, migrations e pipeline CI.
-
----
-
-## Objetivo
-
-Este projeto foi criado para praticar conhecimentos técnicos comuns em vagas de DevOps Júnior:
-
-- Git
-- Docker
-- Docker Compose
-- CI/CD
-- PostgreSQL
-- API REST
-- Variáveis de ambiente
-- Logs
-- Healthcheck
-- Migrations
-- Documentação técnica
-
----
-
-## Stack
-
-- Backend: FastAPI
-- Banco de dados: PostgreSQL
-- ORM: SQLAlchemy
-- Migrations: Alembic
-- Testes: Pytest
-- Containerização: Docker
-- Orquestração local: Docker Compose
-- CI: GitHub Actions
-
----
-
-## Arquitetura
-
-Cliente  
-↓  
-FastAPI Backend  
-↓  
-PostgreSQL  
-
-No ambiente Docker:
-
+```
 devopslab-backend -> devopslab-postgres
+```
 
 ---
 
-## Funcionalidades
+## ⚙️ Funcionalidades
 
-- GET /health  
-  - verifica status da API  
-  - verifica conexão com banco  
-  - retorna timestamp  
+### Healthcheck
 
-- POST /services  
-  - cadastra um serviço monitorado  
+* `GET /health`
 
-- GET /services  
-  - lista os serviços cadastrados  
+  * status da API
+  * status do banco
+  * timestamp
 
 ---
 
-## Como rodar com Docker
+### Serviços
 
-Na raiz do projeto:
+* `POST /services`
+* `GET /services`
 
+---
+
+### Monitoramento
+
+* `POST /checks/run`
+* `GET /checks`
+* `GET /checks/service/{service_id}`
+
+---
+
+## 🔁 Scheduler automático
+
+O sistema executa checks automaticamente a cada intervalo:
+
+* consulta serviços cadastrados
+* faz requisição HTTP
+* mede tempo de resposta
+* salva resultado no banco
+
+---
+
+## 🐳 Como rodar com Docker
+
+```bash
 docker compose up --build
+```
 
 Acesse:
 
-API: http://localhost:8000  
-Docs: http://localhost:8000/docs  
-Healthcheck: http://localhost:8000/health  
+* http://localhost:8000/docs
+* http://localhost:8000/health
 
-Para parar:
+Parar:
 
+```bash
 docker compose down
+```
 
-Para resetar banco:
+Resetar banco:
 
+```bash
 docker compose down -v
+```
 
 ---
 
-## Testes
+## 🧪 Testes
 
-Dentro de backend:
-
+```bash
+cd backend
 python -m pytest
+```
 
 ---
 
-## CI/CD
+## 🗃️ Banco de dados
 
-O projeto usa GitHub Actions para:
+* PostgreSQL
+* Migrations com Alembic
 
-- rodar testes
-- validar build Docker
+Rodar migrations:
+
+```bash
+alembic upgrade head
+```
+
+---
+
+## 📊 Logs
+
+Exemplo:
+
+```
+method=GET path=/health status_code=200 duration_ms=2.3
+```
+
+---
+
+## 🔌 Variáveis de ambiente
+
+Local:
+
+```
+DATABASE_URL=postgresql://postgres:123456@localhost:5432/devopslab
+```
+
+Docker:
+
+```
+DATABASE_URL=postgresql://postgres:123456@postgres:5432/devopslab
+```
+
+---
+
+## ⚠️ Observações
+
+* Projeto focado em aprendizado
+* Scheduler simples (thread)
+* Não preparado para múltiplas instâncias
+
+---
+
+## 📈 Próximos passos
+
+* Deploy no Render
+* Logs estruturados
+* Dashboard simples
+
+---
+
+## 📌 Status
+
+✔ API funcional
+✔ Docker funcionando
+✔ Banco integrado
+✔ Scheduler automático
+✔ Monitoramento básico
+
+---
+
+## 👨‍💻 Autor
+
+Thierre Mota de Almeida
