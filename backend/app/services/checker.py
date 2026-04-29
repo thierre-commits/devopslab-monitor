@@ -13,7 +13,6 @@ def run_service_check(service: Service, db: Session) -> Check:
     try:
         response = httpx.get(service.url, timeout=5.0)
         response_time_ms = int((time.perf_counter() - start_time) * 1000)
-
         status = "up" if response.status_code < 500 else "down"
 
     except Exception:
@@ -35,7 +34,6 @@ def run_service_check(service: Service, db: Session) -> Check:
 
 def run_all_service_checks(db: Session) -> list[Check]:
     services = db.query(Service).all()
-
     checks = []
 
     for service in services:

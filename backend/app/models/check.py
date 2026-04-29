@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
@@ -13,6 +13,6 @@ class Check(Base):
     service_id = Column(Integer, ForeignKey("services.id"), nullable=False)
     status = Column(String, nullable=False)
     response_time_ms = Column(Integer, nullable=True)
-    checked_at = Column(DateTime, default=datetime.utcnow)
+    checked_at = Column(DateTime, default=lambda: datetime.now(UTC))
 
     service = relationship("Service")

@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.db.deps import get_db
 from app.models.check import Check
 from app.schemas.check import CheckCreate, CheckResponse
+from app.services.checker import run_all_service_checks
 
 router = APIRouter(prefix="/checks", tags=["checks"])
 
@@ -21,6 +22,11 @@ def create_check(check: CheckCreate, db: Session = Depends(get_db)):
     db.refresh(new_check)
 
     return new_check
+
+
+@router.post("/run", response_model=list[CheckResponse])
+def run_checks(db: Session = Depends(get_db)):
+    return run_all_service_checks(db)
 
 
 @router.get("", response_model=list[CheckResponse])

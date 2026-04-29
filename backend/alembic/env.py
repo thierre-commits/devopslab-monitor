@@ -27,6 +27,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 from app.db.database import Base
 from app.models.service import Service
+from app.models.check import Check
 
 target_metadata = Base.metadata
 
