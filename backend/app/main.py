@@ -4,13 +4,9 @@ from app.api.health import router as health_router
 from app.api.services import router as services_router
 from app.core.config import settings
 from app.core.logging import configure_logging
-from app.db.database import Base, engine
 from app.middlewares.request_logger import RequestLoggerMiddleware
-from app.models import service
 
 configure_logging()
-
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title=settings.app_name,
