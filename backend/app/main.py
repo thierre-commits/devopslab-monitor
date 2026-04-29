@@ -6,6 +6,7 @@ from app.api.services import router as services_router
 from app.core.config import settings
 from app.core.logging import configure_logging
 from app.middlewares.request_logger import RequestLoggerMiddleware
+from app.services.checker import start_scheduler
 
 configure_logging()
 
@@ -13,6 +14,8 @@ app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
 )
+
+start_scheduler()
 
 app.add_middleware(RequestLoggerMiddleware)
 

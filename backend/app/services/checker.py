@@ -3,8 +3,12 @@ import time
 import httpx
 from sqlalchemy.orm import Session
 
+import threading
+import time
+
 from app.models.check import Check
 from app.models.service import Service
+from app.db.database import SessionLocal
 
 
 def run_service_check(service: Service, db: Session) -> Check:
@@ -41,3 +45,18 @@ def run_all_service_checks(db: Session) -> list[Check]:
         checks.append(check)
 
     return checks
+
+def start_scheduler(interval_seconds: int = 30):
+    def loop():
+        while True:
+            try:
+                db = SessionLocal()
+                run_all_service_checks(db)
+                db.close()
+            except Exception as e:
+                print(f"[Scheduler] error: {e}")
+
+            time.sleep(interval_seconds)
+
+    thread = threading.Thread(target=loop, daemon=True)
+    thread.start()
